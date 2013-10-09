@@ -24,7 +24,6 @@
 #include "Geometry/Records/interface/MuonGeometryRecord.h"
 
 //RecHit
-#include "DataFormats/DTRecHit/interface/DTRecSegment4DCollection.h"
 #include "DataFormats/DTRecHit/interface/DTRecHitCollection.h"
 
 
@@ -39,6 +38,7 @@ DTResolutionAnalysisTask::DTResolutionAnalysisTask(const ParameterSet& pset) {
 
   // the name of the 4D rec hits collection
   theRecHits4DLabel = pset.getParameter<string>("recHits4DLabel");
+  theRecHits4DToken = consumes<DTRecSegment4DCollection>(theRecHits4DLabel);
   
   prescaleFactor = pset.getUntrackedParameter<int>("diagnosticPrescale", 1);
   resetCycle = pset.getUntrackedParameter<int>("ResetCycle", -1);
@@ -117,7 +117,7 @@ void DTResolutionAnalysisTask::analyze(const edm::Event& event, const edm::Event
   
   // Get the 4D segment collection from the event
   edm::Handle<DTRecSegment4DCollection> all4DSegments;
-  event.getByLabel(theRecHits4DLabel, all4DSegments);
+  event.getByToken(theRecHits4DToken, all4DSegments);
 
   // check the validity of the collection 
   if(!all4DSegments.isValid()) return;
