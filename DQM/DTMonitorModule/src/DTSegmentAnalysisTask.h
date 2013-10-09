@@ -20,6 +20,8 @@
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include <FWCore/Framework/interface/EDAnalyzer.h>
 #include <FWCore/Framework/interface/ESHandle.h>
+//RecHit
+#include "DataFormats/DTRecHit/interface/DTRecSegment4DCollection.h"
 
 #include <string>
 #include <map>
@@ -69,9 +71,10 @@ private:
    // Get the DT Geometry
   edm::ESHandle<DTGeometry> dtGeom;
 
-  // Lable of 4D segments in the event
+  // Label and token of 4D segments in the event
   std::string theRecHits4DLabel;
-
+  edm::EDGetTokenT<DTRecSegment4DCollection> theRecHits4DToken;
+  
   // Get the map of noisy channels
   bool checkNoisyChannels;
 
