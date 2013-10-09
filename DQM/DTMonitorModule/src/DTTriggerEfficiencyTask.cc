@@ -136,7 +136,8 @@ void DTTriggerEfficiencyTask::analyze(const edm::Event& e, const edm::EventSetup
 
   // Getting best DCC Stuff
   edm::Handle<L1MuDTChambPhContainer> l1DTTPGPh;
-  e.getByToken(tokenDCC,l1DTTPGPh);
+//   e.getByToken(tokenDCC,l1DTTPGPh);
+  e.getByLabel(inputTagDCC,l1DTTPGPh);
   vector<L1MuDTChambPhDigi>*  phTrigs = l1DTTPGPh->getContainer();
 
   vector<L1MuDTChambPhDigi>::const_iterator iph  = phTrigs->begin();
@@ -156,7 +157,8 @@ void DTTriggerEfficiencyTask::analyze(const edm::Event& e, const edm::EventSetup
 
   //Getting Best DDU Stuff
   Handle<DTLocalTriggerCollection> trigsDDU;
-  e.getByToken(tokenDDU,trigsDDU);
+//   e.getByToken(tokenDDU,trigsDDU);
+  e.getByLabel(inputTagDDU,trigsDDU);
   DTLocalTriggerCollection::DigiRangeIterator detUnitIt;
 
   for (detUnitIt=trigsDDU->begin();detUnitIt!=trigsDDU->end();++detUnitIt){
@@ -179,7 +181,8 @@ void DTTriggerEfficiencyTask::analyze(const edm::Event& e, const edm::EventSetup
   vector<const DTRecSegment4D*> best4DSegments;
 
   Handle<reco::MuonCollection> muons;
-  e.getByToken(tokenMuons, muons);
+//   e.getByToken(tokenMuons, muons);
+  e.getByLabel(inputTagMuons, muons);
   reco::MuonCollection::const_iterator mu;
 
   for( mu = muons->begin(); mu != muons->end(); ++mu ) {
@@ -277,8 +280,9 @@ void DTTriggerEfficiencyTask::analyze(const edm::Event& e, const edm::EventSetup
 bool DTTriggerEfficiencyTask::hasRPCTriggers(const edm::Event& e) {
 
   edm::Handle<L1MuGMTReadoutCollection> gmtrc; 
-  e.getByToken(tokenGMT,gmtrc);
-
+//   e.getByToken(tokenGMT,gmtrc);
+  e.getByLabel(inputTagGMT,gmtrc);
+  
   std::vector<L1MuGMTReadoutRecord> gmt_records = gmtrc->getRecords();
   std::vector<L1MuGMTReadoutRecord>::const_iterator igmtrr = gmt_records.begin();
   std::vector<L1MuGMTReadoutRecord>::const_iterator egmtrr = gmt_records.end();
