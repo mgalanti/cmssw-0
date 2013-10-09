@@ -22,7 +22,6 @@
 
 #include "Geometry/Records/interface/MuonGeometryRecord.h"
 
-#include "DataFormats/DTRecHit/interface/DTRecSegment4D.h"
 #include "DataFormats/MuonDetId/interface/MuonSubdetId.h"
 #include "CondFormats/DataRecord/interface/DTMtimeRcd.h"
 
@@ -55,6 +54,7 @@ DTRunConditionVar::DTRunConditionVar(const ParameterSet& pSet):
 
   // Get the DQM needed services
   theDbe = Service<DQMStore>().operator->();
+  thedt4DSegmentsToken = consumes<DTRecSegment4DCollection>(thedt4DSegments_);
 
 }
 
@@ -131,7 +131,7 @@ void DTRunConditionVar::analyze(const Event & event,
 
   // Get the segment collection from the event
   Handle<DTRecSegment4DCollection> all4DSegments;
-  event.getByLabel(thedt4DSegments_, all4DSegments); 
+  event.getByToken(thedt4DSegmentsToken, all4DSegments); 
 
   // Loop over the segments
   for(DTRecSegment4DCollection::const_iterator segment  = all4DSegments->begin();

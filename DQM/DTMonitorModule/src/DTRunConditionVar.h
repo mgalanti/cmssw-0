@@ -30,6 +30,8 @@
 #include "MagneticField/Engine/interface/MagneticField.h"
 #include "CondFormats/DTObjects/interface/DTMtime.h"
 
+#include "DataFormats/DTRecHit/interface/DTRecSegment4D.h"
+
 #include "RecoMuon/MeasurementDet/interface/MuonDetLayerMeasurements.h"
 #include <vector>
 #include <string>
@@ -64,7 +66,8 @@ class DTRunConditionVar : public edm::EDAnalyzer
     double maxAnglePhiSegm;
 
     edm::InputTag thedt4DSegments_;
-
+    edm::EDGetTokenT<DTRecSegment4DCollection> thedt4DSegmentsToken;
+    
     edm::ESHandle<DTGeometry> dtGeom;
 
     edm::ESHandle<DTMtime> mTime;
