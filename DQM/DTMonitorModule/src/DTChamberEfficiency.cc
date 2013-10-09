@@ -71,6 +71,7 @@ DTChamberEfficiency::DTChamberEfficiency(const ParameterSet& pSet)
   theService = new MuonServiceProxy(serviceParameters);
 
   theTracksLabel = pSet.getParameter<InputTag>("TrackCollection");
+  theTracksToken = consumes<reco::TrackCollection>(theTracksLabel);
 
   theMaxChi2 = static_cast<unsigned int>(pSet.getParameter<double>("theMaxChi2"));
   theNSigma = pSet.getParameter<double>("theNSigma");
@@ -176,7 +177,7 @@ void DTChamberEfficiency::analyze(const Event & event,
 
   //Read tracks from event
   Handle<reco::TrackCollection> tracks;
-  event.getByLabel(theTracksLabel, tracks);
+  event.getByToken(theTracksToken, tracks);
   
   if(tracks.isValid()) { // check the validity of the collection
 
