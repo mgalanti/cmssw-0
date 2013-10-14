@@ -13,11 +13,11 @@
 
 #include "DTChamberEfficiency.h"
 
+#include "FWCore/Framework/interface/ConsumesCollector.h"
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/Framework/interface/EventSetup.h"
 #include "FWCore/ServiceRegistry/interface/Service.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
-
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 
 #include "Geometry/Records/interface/MuonGeometryRecord.h"
@@ -83,7 +83,8 @@ DTChamberEfficiency::DTChamberEfficiency(const ParameterSet& pSet)
   thecscSegments = pSet.getParameter<InputTag>("cscSegments");
 
   theMeasurementExtractor = new MuonDetLayerMeasurements(thedt4DSegments,thecscSegments,
-							 labelRPCRecHits,true,false,false); 
+                                                         labelRPCRecHits,consumesCollector(),
+                                                         true,false,false); 
 
   theNavigationType = pSet.getParameter<string>("NavigationType");
 
